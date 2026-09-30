@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ChronoX - Digital Clock & Stopwatch</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Animated Background -->
+    <div class="background">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+
+        <div class="brand">
+            <div class="logo">⏱</div>
+
+            <div>
+                <h1>Chrono<span>X</span></h1>
+                <p>Time • Track • Perform</p>
+            </div>
+        </div>
+
+        <div class="header-actions">
+
+            <button id="themeBtn" class="icon-btn" title="Change theme">
+                ☀
+            </button>
+
+            <button id="fullscreenBtn" class="icon-btn" title="Fullscreen">
+                ⛶
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <main class="container">
+
+        <!-- DIGITAL CLOCK -->
+        <section class="clock-card glass">
+
+            <div class="section-label">
+                <span class="live-dot"></span>
+                LIVE CLOCK
+            </div>
+
+            <div id="time" class="digital-time">
+                00:00:00
+            </div>
+
+            <div id="date" class="date">
+                Monday, January 1, 2026
+            </div>
+
+            <div class="clock-info">
+
+                <div class="info-item">
+                    <span>TIME ZONE</span>
+                    <strong id="timezone">IST</strong>
+                </div>
+
+                <div class="info-item">
+                    <span>STATUS</span>
+                    <strong class="online">● LIVE</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- STOPWATCH -->
+        <section class="stopwatch-card glass">
+
+            <div class="section-title">
+
+                <div>
+                    <span class="small-label">PRECISION TIMER</span>
+                    <h2>Stopwatch</h2>
+                </div>
+
+                <div id="stopwatchStatus" class="status paused">
+                    READY
+                </div>
+
+            </div>
+
+
+            <!-- Stopwatch Display -->
+            <div class="stopwatch-display">
+
+                <span id="minutes">00</span>
+                <span class="colon">:</span>
+
+                <span id="seconds">00</span>
+                <span class="colon">:</span>
+
+                <span id="milliseconds">00</span>
+
+            </div>
+
+
+            <!-- Progress Ring -->
+            <div class="progress-container">
+
+                <div class="progress-ring">
+
+                    <svg width="210" height="210">
+
+                        <circle
+                            class="ring-background"
+                            cx="105"
+                            cy="105"
+                            r="92">
+                        </circle>
+
+                        <circle
+                            id="progressCircle"
+                            class="ring-progress"
+                            cx="105"
+                            cy="105"
+                            r="92">
+                        </circle>
+
+                    </svg>
+
+                    <div class="ring-center">
+                        <span>CHRONO</span>
+                        <strong id="lapCounter">0 LAPS</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Controls -->
+            <div class="controls">
+
+                <button id="startBtn" class="control-btn primary">
+                    <span>▶</span>
+                    Start
+                </button>
+
+                <button id="lapBtn" class="control-btn secondary" disabled>
+                    <span>🏁</span>
+                    Lap
+                </button>
+
+                <button id="resetBtn" class="control-btn danger">
+                    <span>↻</span>
+                    Reset
+                </button>
+
+            </div>
+
+
+            <!-- Statistics -->
+            <div class="statistics">
+
+                <div class="stat">
+                    <span>BEST LAP</span>
+                    <strong id="bestLap">--:--:--</strong>
+                </div>
+
+                <div class="stat">
+                    <span>AVERAGE</span>
+                    <strong id="averageLap">--:--:--</strong>
+                </div>
+
+                <div class="stat">
+                    <span>TOTAL LAPS</span>
+                    <strong id="totalLaps">0</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LAP TABLE -->
+        <section class="laps-card glass">
+
+            <div class="laps-header">
+
+                <div>
+                    <span class="small-label">HISTORY</span>
+                    <h2>Lap Times</h2>
+                </div>
+
+                <button id="clearLapsBtn" class="clear-btn">
+                    Clear
+                </button>
+
+            </div>
+
+
+            <div class="lap-table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+                            <th>#</th>
+                            <th>LAP TIME</th>
+                            <th>TOTAL TIME</th>
+                            <th>DIFFERENCE</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="lapList">
+
+                        <tr class="empty-row">
+
+                            <td colspan="4">
+                                <div class="empty-state">
+                                    <div>🏁</div>
+                                    <p>No lap times yet</p>
+                                    <small>Start the stopwatch and press Lap</small>
+                                </div>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- Keyboard Help -->
+        <section class="shortcuts glass">
+
+            <h3>Keyboard Shortcuts</h3>
+
+            <div class="shortcut-list">
+
+                <div>
+                    <kbd>SPACE</kbd>
+                    <span>Start / Pause</span>
+                </div>
+
+                <div>
+                    <kbd>L</kbd>
+                    <span>Record Lap</span>
+                </div>
+
+                <div>
+                    <kbd>R</kbd>
+                    <span>Reset</span>
+                </div>
+
+                <div>
+                    <kbd>F</kbd>
+                    <span>Fullscreen</span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>ChronoX © 2026 • Built for precision</p>
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
